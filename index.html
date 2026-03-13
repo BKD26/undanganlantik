@@ -200,9 +200,10 @@ Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017 tentang Manajemen
 setiap Pegawai Negeri Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat sumpah/janji jabatan 
 menurut agama atau kepercayaannya kepada Tuhan Yang Maha Esa.
 Sehubungan dengan hal tersebut, dimohon kehadiran Saudara untuk dilantik dan mengangkat sumpah/janji jabatan 
-sebagai .............., yang akan dilaksanakan pada
+sebagai   <h5 id="jabPejabat"></h5> , yang akan dilaksanakan pada
 
 </p>
+    
 
 <p></p>Hari / Tanggal</p>
 <p>Selasa, 17 Maret 2026</p>
@@ -229,12 +230,14 @@ Atas kehadiran Bapak/Ibu diucapkan terima kasih.
 <script>
 const params = new URLSearchParams(window.location.search);
 const pejabat = params.get("pejabat");
+const pejabat = params.get("jabatan");
 
 if(!pejabat){
     document.body.style.display = "block";
     document.body.innerHTML = "<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
 } else {
     document.getElementById("namaPejabat").textContent = pejabat;
+    document.getElementById("jabPejabat").textContent = jabatan;
     document.body.style.display = "block";
 }
 
