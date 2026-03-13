@@ -300,14 +300,21 @@ const data=await response.json();
 
 const namaURL = decodeURIComponent(pejabat).toLowerCase().trim();
 
-const hasil = data.find(item =>
-item.pejabat &&
-item.pejabat.toLowerCase().trim() === namaURL
-);
+let linkDrive=null;
 
-if(hasil){
+data.forEach(row=>{
 
-document.querySelector(".drive-btn").href = hasil.link;
+const namaSheet=row.pejabat.toLowerCase().trim();
+
+if(namaSheet===namaURL){
+linkDrive=row.link;
+}
+
+});
+
+if(linkDrive){
+
+document.querySelector(".drive-btn").href=linkDrive;
 
 }else{
 
@@ -316,9 +323,9 @@ document.querySelector(".drive-btn").style.background="#777";
 
 }
 
-}catch(error){
+}catch(e){
 
-console.log("Gagal mengambil data:",error);
+console.log(e);
 
 }
 
