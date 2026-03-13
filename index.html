@@ -228,20 +228,29 @@ Atas kehadiran Bapak/Ibu diucapkan terima kasih.
 </div>
 
 <script>
+
 const params = new URLSearchParams(window.location.search);
+
 const pejabat = params.get("pejabat");
-const pejabat = params.get("jabatan");
+const jabatan = params.get("jabatan");
 
 if(!pejabat){
     document.body.style.display = "block";
     document.body.innerHTML = "<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
-} else {
+} 
+else {
+
     document.getElementById("namaPejabat").textContent = pejabat;
-    document.getElementById("jabPejabat").textContent = jabatan;
+
+    if(jabatan){
+        document.getElementById("jabPejabat").textContent = jabatan;
+    }
+
     document.body.style.display = "block";
 }
 
 function bukaUndangan(){
+
     const cover = document.getElementById("cover");
     const isi   = document.getElementById("isi");
     const musik = document.getElementById("musik");
@@ -252,6 +261,7 @@ function bukaUndangan(){
     cover.style.opacity = "0";
 
     setTimeout(() => {
+
         cover.style.display = "none";
         isi.style.display = "block";
         isi.style.opacity = "0";
@@ -261,24 +271,32 @@ function bukaUndangan(){
         }, 50);
 
     }, 500);
+
 }
 
-// 🎼 Hentikan musik saat halaman ditutup / refresh
+// hentikan musik saat halaman ditutup
 window.addEventListener("beforeunload", function () {
+
     const musik = document.getElementById("musik");
+
     if (musik) {
         musik.pause();
         musik.currentTime = 0;
     }
+
 });
 
-// 🎵 Hentikan musik saat pindah tab
+// hentikan musik saat pindah tab
 document.addEventListener("visibilitychange", function () {
+
     const musik = document.getElementById("musik");
+
     if (document.hidden && musik) {
         musik.pause();
     }
+
 });
+
 </script>
 
 </body>
