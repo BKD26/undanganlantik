@@ -111,30 +111,6 @@ max-width:420px;
 box-shadow:0 5px 20px rgba(0,0,0,0.15);
 }
 
-.card-undangan{
-position:relative;
-overflow:hidden;
-}
-
-.card-undangan::before{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background-image:url('patung.png');
-background-size:cover;
-background-position:center;
-opacity:0.32;
-z-index:0;
-}
-
-.card-undangan > *{
-position:relative;
-z-index:1;
-}
-
 /* TOMBOL */
 
 .button,
@@ -158,29 +134,15 @@ background:#ffd700;
 color:black;
 }
 
-/* TEXT */
-
 .justify{
 text-align:justify;
 text-indent:30px;
 }
 
-.text-left{
-text-align:left;
-}
-
-.text-right{
-text-align:right;
-}
-
-/* ANIMASI */
-
 @keyframes fadeIn{
 from{opacity:0; transform:translateY(20px);}
 to{opacity:1; transform:translateY(0);}
 }
-
-/* RESPONSIVE */
 
 @media(max-width:768px){
 
@@ -270,13 +232,13 @@ Atas kehadiran Bapak/Ibu diucapkan terima kasih.
 
 <script>
 
-/* AMBIL PARAMETER URL */
+/* PARAMETER URL */
 
 const params = new URLSearchParams(window.location.search);
 const pejabat = params.get("pejabat");
 const jabatan = params.get("jabatan");
 
-/* VALIDASI URL */
+/* VALIDASI */
 
 if(!pejabat){
 
@@ -295,7 +257,7 @@ document.body.style.display="block";
 
 }
 
-/* AMBIL LINK UNDANGAN DARI GOOGLE SHEETS */
+/* AMBIL LINK UNDANGAN */
 
 async function ambilDataUndangan(){
 
@@ -353,7 +315,6 @@ const isi=document.getElementById("isi");
 const musik=document.getElementById("musik");
 
 musik.volume=0.5;
-
 musik.play().catch(()=>{});
 
 cover.style.opacity="0";
@@ -361,22 +322,36 @@ cover.style.opacity="0";
 setTimeout(()=>{
 
 cover.style.display="none";
-
 isi.style.display="block";
-
-isi.style.opacity="0";
-
-setTimeout(()=>{
-
-isi.style.opacity="1";
-
-},50);
 
 },500);
 
 }
 
-/* HENTIKAN MUSIK SAAT TUTUP */
+/* STATISTIK PEMBUKA UNDANGAN */
+
+function kirimStatistik(){
+
+const urlScript="PASTE_URL_APPS_SCRIPT_DISINI";
+
+const data={
+pejabat:pejabat || "",
+jabatan:jabatan || "",
+device:navigator.platform,
+browser:navigator.userAgent,
+link:window.location.href
+};
+
+fetch(urlScript,{
+method:"POST",
+body:JSON.stringify(data)
+}).catch(()=>{});
+
+}
+
+kirimStatistik();
+
+/* STOP MUSIK */
 
 window.addEventListener("beforeunload",function(){
 
@@ -388,8 +363,6 @@ musik.currentTime=0;
 }
 
 });
-
-/* HENTIKAN MUSIK SAAT PINDAH TAB */
 
 document.addEventListener("visibilitychange",function(){
 
