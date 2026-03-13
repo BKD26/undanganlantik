@@ -237,99 +237,52 @@ Atas kehadiran Bapak/Ibu diucapkan terima kasih.
 
 <script>
 
-/* PARAMETER URL */
-
-const params=new URLSearchParams(window.location.search);
-
-const pejabat=params.get("pejabat");
-const jabatan=params.get("jabatan");
-const jenis=params.get("jenis")||"peserta";
-
-if(!pejabat){
-
-document.body.style.display="block";
-document.body.innerHTML="<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
-
-}else{
-
-document.getElementById("namaPejabat").textContent=pejabat;
-
-const isi=document.getElementById("isiUndangan");
-
-if(jenis==="tamu"){
-
-isi.innerHTML=`
-Sehubungan dengan pelaksanaan Pelantikan Pejabat Pimpinan Tinggi,
-Pejabat Administrator dan Pejabat Pengawas, dengan hormat kami
-mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada
-kegiatan tersebut yang akan dilaksanakan pada:
-`;
-
-}else{
-
-isi.innerHTML=`
-Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017
-tentang Manajemen Pegawai Negeri Sipil, setiap Pegawai Negeri
-Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat
-sumpah/janji jabatan menurut agama atau kepercayaannya kepada
-Tuhan Yang Maha Esa.
-
-Sehubungan dengan hal tersebut, dimohon kehadiran Saudara/Saudari
-untuk dilantik dan mengangkat sumpah/janji jabatan sebagai
-<b>${jabatan||"-"}</b>, yang akan dilaksanakan pada:
-`;
-
-}
-
-document.body.style.display="block";
-
-}
-
-/* AMBIL LINK DARI GOOGLE SHEETS */
-
-async function ambilDataUndangan(){
-
-try{
-
 const params = new URLSearchParams(window.location.search);
 const pejabat = params.get("pejabat");
 
+/* tampilkan halaman */
+document.body.style.display = "block";
+
 if(!pejabat){
 
-document.body.style.display="block";
-document.body.innerHTML="<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
-
-}else{
-
-document.getElementById("namaPejabat").textContent = decodeURIComponent(pejabat);
+document.body.innerHTML =
+"<h2 style='color:white;margin-top:40vh;text-align:center'>Undangan Tidak Valid</h2>";
 
 }
+
+/* ambil data dari google sheets */
 
 async function ambilDataUndangan(){
 
 try{
 
-const urlSheet="https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
+const urlSheet =
+"https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
 
-const response=await fetch(urlSheet);
-const data=await response.json();
+const response = await fetch(urlSheet);
+const data = await response.json();
 
-const namaCari = decodeURIComponent(pejabat).toLowerCase().trim();
+const namaCari = decodeURIComponent(pejabat || "").toLowerCase().trim();
 
 const hasil = data.find(row =>
 (row.pejabat || "").toLowerCase().trim() === namaCari
 );
 
-const isiUndangan = document.getElementById("isiUndangan");
-const btn = document.querySelector(".drive-btn");
+if(!hasil){
+return;
+}
 
-if(hasil){
+/* tampilkan nama */
 
-/* ISI UNDANGAN */
+document.getElementById("namaPejabat").textContent = hasil.pejabat;
+
+/* isi undangan */
+
+const isi = document.getElementById("isiUndangan");
 
 if(hasil.jenis === "tamu"){
 
-isiUndangan.innerHTML = `
+isi.innerHTML = `
 Sehubungan dengan pelaksanaan Pelantikan Pejabat Pimpinan Tinggi,
 Pejabat Administrator dan Pejabat Pengawas, dengan hormat kami
 mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada
@@ -338,7 +291,7 @@ kegiatan tersebut yang akan dilaksanakan pada:
 
 }else{
 
-isiUndangan.innerHTML = `
+isi.innerHTML = `
 Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017
 tentang Manajemen Pegawai Negeri Sipil, setiap Pegawai Negeri
 Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat
@@ -352,7 +305,9 @@ untuk dilantik dan mengangkat sumpah/janji jabatan sebagai
 
 }
 
-/* LINK DRIVE */
+/* link google drive */
+
+const btn = document.querySelector(".drive-btn");
 
 if(hasil.link){
 
@@ -361,19 +316,15 @@ btn.target = "_blank";
 
 }else{
 
-btn.innerText="Dokumen tidak tersedia";
-btn.style.background="#777";
+btn.innerText = "Dokumen tidak tersedia";
+btn.style.background = "#777";
 btn.removeAttribute("href");
 
 }
 
-}
-
-document.body.style.display="block";
-
 }catch(e){
 
-console.log("Gagal mengambil data",e);
+console.log("Error mengambil data:",e);
 
 }
 
@@ -381,46 +332,31 @@ console.log("Gagal mengambil data",e);
 
 ambilDataUndangan();
 
-  
-
-/* BUKA UNDANGAN */
+/* buka undangan */
 
 function bukaUndangan(){
 
-const cover=document.getElementById("cover");
-const isi=document.getElementById("isi");
-const musik=document.getElementById("musik");
+const cover = document.getElementById("cover");
+const isi = document.getElementById("isi");
+const musik = document.getElementById("musik");
 
-musik.volume=.5;
+musik.volume = 0.5;
 musik.play();
 
-cover.style.opacity="0";
-
-setTimeout(()=>{
-
-cover.style.display="none";
-isi.style.display="block";
-isi.style.opacity="0";
-
-setTimeout(()=>{isi.style.opacity="1"},50);
-
-},500);
+cover.style.display = "none";
+isi.style.display = "block";
 
 }
 
-/* HENTIKAN MUSIK */
+/* hentikan musik */
 
-window.addEventListener("beforeunload",()=>{
+window.addEventListener("beforeunload",function(){
 
-const musik=document.getElementById("musik");
-if(musik){musik.pause();musik.currentTime=0}
-
-});
-
-document.addEventListener("visibilitychange",()=>{
-
-const musik=document.getElementById("musik");
-if(document.hidden && musik){musik.pause()}
+const musik = document.getElementById("musik");
+if(musik){
+musik.pause();
+musik.currentTime = 0;
+}
 
 });
 
