@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Undangan Pelantikan Pejabat Eselon II, III dan IV</title>
+<title>Undangan Pelantikan Pejabat</title>
 
 <meta name="description" content="Undangan Resmi Pelantikan">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Undangan Pelantikan">
-<meta property="og:description" content="Pelantikan Pejabat Eselon II, III dan IV">
-<meta property="og:image" content="https://bkd26.github.io/undanganlantik/preview.jpg">
-<meta property="og:url" content="https://bkd26.github.io/undanganlantik/">
+<meta property="og:description" content="Pelantikan Pejabat">
+<meta property="og:image" content="https://bkd26.github.io/pelantikansekda/preview.jpg">
+<meta property="og:url" content="https://bkd26.github.io/pelantikansekda/">
 
 <link rel="icon" href="logo.png">
 
@@ -28,8 +27,6 @@ text-align:center;
 overflow-x:hidden;
 }
 
-/* COVER */
-
 .cover{
 height:100vh;
 display:flex;
@@ -37,27 +34,6 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 padding:20px;
-position:relative;
-}
-
-.cover::before{
-content:"";
-position:absolute;
-top:160px;
-left:0;
-width:100%;
-height:65%;
-background-image:url('BUP.png'),url('WABUP.png');
-background-repeat:no-repeat,no-repeat;
-background-position:20% bottom,80% bottom;
-background-size:300px,300px;
-opacity:.65;
-z-index:0;
-}
-
-.cover>*{
-position:relative;
-z-index:1;
 }
 
 .logo{
@@ -76,12 +52,6 @@ cursor:pointer;
 font-weight:bold;
 }
 
-button:hover{
-background:#ffd700;
-}
-
-/* ISI */
-
 .isi{
 display:none;
 background:white;
@@ -93,13 +63,10 @@ min-height:100vh;
 .card{
 background:#f4f4f4;
 padding:25px;
-margin:auto;
+margin:20px auto;
 border-radius:15px;
 max-width:420px;
-box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
-
-/* BUTTON */
 
 .button,
 .drive-btn{
@@ -107,6 +74,7 @@ display:inline-block;
 margin-top:15px;
 padding:12px 25px;
 min-width:170px;
+text-align:center;
 background:#0b3d91;
 color:white;
 text-decoration:none;
@@ -126,7 +94,6 @@ text-indent:30px;
 }
 
 </style>
-
 </head>
 
 <body style="display:none;">
@@ -155,158 +122,136 @@ text-indent:30px;
 
 <div class="isi" id="isi">
 
-<h4>PELANTIKAN PEJABAT PIMPINAN TINGGI, PEJABAT ADMINISTRATOR DAN PEJABAT PENGAWAS</h4>
+<h4>PELANTIKAN PEJABAT</h4>
 
 <div class="card">
 
-<p class="justify" id="isiUndangan"></p>
+<p class="justify">
+Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017 tentang Manajemen Pegawai Negeri Sipil.
+</p>
+
+<p class="justify">
+Dimohon kehadiran Saudara untuk dilantik sebagai <b id="jabPejabat"></b>.
+</p>
 
 <p><b>Hari / Tanggal</b></p>
 <p>Selasa, 17 Maret 2026</p>
 
 <p><b>Jam</b></p>
-<p>14.00 WIT s.d. selesai</p>
+<p>14.00 WIT</p>
 
 <p><b>Tempat</b></p>
 <p>Aula Kantor Bupati Boven Digoel</p>
 
-<p>
-Demikian undangan ini disampaikan.  
-Atas kehadiran Bapak/Ibu diucapkan terima kasih.
-</p>
+<div class="dokumen-section">
 
-<a href="https://maps.app.goo.gl/odj2snPyDhbd431d9" target="_blank" class="button">📍 Maps</a>
+<a href="https://maps.app.goo.gl/odj2snPyDhbd431d9" target="_blank" class="button">
+📍 Maps
+</a>
 
-<a href="#" target="_blank" class="drive-btn">📄 Undangan Resmi TTD BUP</a>
+<a href="#" target="_blank" class="drive-btn">
+📄 Undangan Resmi TTD BUP
+</a>
+
+</div>
 
 </div>
 </div>
 
 <script>
 
-/* ambil parameter */
-
 const params = new URLSearchParams(window.location.search);
-const pejabat = params.get("pejabat");
 
-document.body.style.display="block";
+const pejabat = params.get("pejabat");
+const jabatan = params.get("jabatan");
 
 if(!pejabat){
 
-document.body.innerHTML =
-"<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
+document.body.style.display="block";
 
-throw new Error("Parameter pejabat tidak ada");
+document.body.innerHTML="<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
 
 }
 
-/* ambil data dari sheets */
+else{
 
-async function ambilData(){
+document.getElementById("namaPejabat").textContent=decodeURIComponent(pejabat);
+
+if(jabatan){
+document.getElementById("jabPejabat").textContent=decodeURIComponent(jabatan);
+}
+
+document.body.style.display="block";
+
+}
+
+/* AMBIL LINK DARI GOOGLE SHEETS */
+
+async function ambilDataUndangan(){
 
 try{
 
-const url="https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
+const urlSheet="https://opensheet.elk.sh/12jA-K6Oi0KpYE17YBZChe2B9659-tzHbG8VygBd9QkU/Sheet1";
 
-const res=await fetch(url);
-const data=await res.json();
+const response=await fetch(urlSheet);
 
-const namaCari=pejabat.toLowerCase().replace(/\s+/g," ").trim();
+const data=await response.json();
 
-const hasil=data.find(row =>
-(row.pejabat || "")
-.toLowerCase()
-.replace(/\s+/g," ")
-.trim()===namaCari
+const hasil=data.find(item=>
+item.pejabat &&
+item.pejabat.toLowerCase() === pejabat.toLowerCase()
 );
 
-if(!hasil){
+if(hasil){
 
-document.getElementById("isiUndangan").innerHTML=
-"Data undangan tidak ditemukan.";
-
-return;
+document.querySelector(".drive-btn").href=hasil.link;
 
 }
 
-/* tampilkan nama */
+else{
 
-document.getElementById("namaPejabat").textContent=hasil.pejabat;
+document.querySelector(".drive-btn").innerText="Dokumen tidak tersedia";
 
-/* isi undangan */
-
-const isi=document.getElementById("isiUndangan");
-
-if(hasil.jenis==="tamu"){
-
-isi.innerHTML=`
-Sehubungan dengan pelaksanaan Pelantikan Pejabat Pimpinan Tinggi,
-Pejabat Administrator dan Pejabat Pengawas, dengan hormat kami
-mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada
-kegiatan tersebut yang akan dilaksanakan pada:
-`;
-
-}else{
-
-isi.innerHTML=`
-Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017
-tentang Manajemen Pegawai Negeri Sipil, setiap Pegawai Negeri
-Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat
-sumpah/janji jabatan menurut agama atau kepercayaannya kepada
-Tuhan Yang Maha Esa.
-
-Sehubungan dengan hal tersebut, dimohon kehadiran Saudara/Saudari
-untuk dilantik dan mengangkat sumpah/janji jabatan sebagai
-<b>${hasil.jabatan}</b>, yang akan dilaksanakan pada:
-`;
+document.querySelector(".drive-btn").style.background="#888";
 
 }
 
-/* tombol drive */
+}catch(err){
 
-const btn=document.querySelector(".drive-btn");
-
-if(hasil.link){
-
-btn.href=hasil.link;
-
-}else{
-
-btn.style.display="none";
-
-}
-
-}catch(e){
-
-console.log("Gagal mengambil data",e);
+console.log("Gagal ambil data:",err);
 
 }
 
 }
 
-ambilData();
+ambilDataUndangan();
 
-/* buka undangan */
+/* BUKA UNDANGAN */
 
 function bukaUndangan(){
 
-document.getElementById("cover").style.display="none";
-document.getElementById("isi").style.display="block";
-
+const cover=document.getElementById("cover");
+const isi=document.getElementById("isi");
 const musik=document.getElementById("musik");
+
 musik.volume=0.5;
 musik.play();
 
+cover.style.display="none";
+isi.style.display="block";
+
 }
 
-/* hentikan musik */
+/* STOP MUSIK SAAT PINDAH TAB */
 
-window.addEventListener("beforeunload",()=>{
+document.addEventListener("visibilitychange",function(){
+
 const musik=document.getElementById("musik");
-if(musik){
+
+if(document.hidden && musik){
 musik.pause();
-musik.currentTime=0;
 }
+
 });
 
 </script>
