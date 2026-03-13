@@ -53,16 +53,15 @@ top:160px;
 left:0;
 width:100%;
 height:65%;
-background-image:url('BUP.png'), url('WABUP.png');
+background-image:url('BUP.png'),url('WABUP.png');
 background-repeat:no-repeat,no-repeat;
-background-position:20% bottom, 80% bottom;
+background-position:20% bottom,80% bottom;
 background-size:300px,300px;
 opacity:0.68;
-pointer-events:none;
 z-index:0;
 }
 
-.cover > *{
+.cover>*{
 position:relative;
 z-index:1;
 }
@@ -80,8 +79,8 @@ color:#0b3d91;
 border:none;
 border-radius:10px;
 cursor:pointer;
-transition:0.3s;
 font-weight:bold;
+transition:.3s;
 }
 
 button:hover{
@@ -105,7 +104,7 @@ padding:25px;
 margin:20px auto;
 border-radius:15px;
 max-width:420px;
-box-shadow:0 5px 20px rgba(0,0,0,0.15);
+box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
 .card-undangan{
@@ -116,23 +115,21 @@ overflow:hidden;
 .card-undangan::before{
 content:"";
 position:absolute;
-top:0;
-left:0;
 width:100%;
 height:100%;
 background-image:url('patung.png');
 background-size:cover;
 background-position:center;
-opacity:0.32;
+opacity:.32;
 z-index:0;
 }
 
-.card-undangan > *{
+.card-undangan>*{
 position:relative;
 z-index:1;
 }
 
-/* TOMBOL */
+/* BUTTON */
 
 .button,
 .drive-btn{
@@ -140,13 +137,12 @@ display:inline-block;
 margin-top:15px;
 padding:12px 25px;
 min-width:170px;
-text-align:center;
 background:#0b3d91;
 color:white;
 text-decoration:none;
 border-radius:8px;
 font-weight:bold;
-transition:0.3s;
+transition:.3s;
 }
 
 .button:hover,
@@ -155,45 +151,27 @@ background:#ffd700;
 color:black;
 }
 
-/* TEXT */
-
 .justify{
 text-align:justify;
 text-indent:30px;
 }
 
-.text-left{
-text-align:left;
-}
-
-.text-right{
-text-align:right;
-}
-
-/* ANIMASI */
-
 @keyframes fadeIn{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
 }
-
-/* RESPONSIVE */
 
 @media(max-width:768px){
 
 .cover::before{
 background-size:160px,160px;
-background-position:10% bottom, 90% bottom;
+background-position:10% bottom,90% bottom;
 height:55%;
 }
 
-.logo{
-width:140px;
-}
+.logo{width:140px}
 
-.card{
-max-width:90%;
-}
+.card{max-width:90%}
 
 }
 
@@ -201,8 +179,6 @@ max-width:90%;
 </head>
 
 <body style="display:none;">
-
-<!-- AUDIO -->
 
 <audio id="musik" loop>
 <source src="musik.mp3" type="audio/mpeg">
@@ -233,15 +209,7 @@ max-width:90%;
 <div class="card">
 
 <p class="justify" id="isiUndangan"></p>
-<!---  
-<p class="justify">
-Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017 tentang Manajemen Pegawai Negeri Sipil, setiap Pegawai Negeri Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat sumpah/janji jabatan menurut agama atau kepercayaannya kepada Tuhan Yang Maha Esa.
-</p>
 
-<p class="justify">
-Sehubungan dengan hal tersebut, dimohon kehadiran Saudara untuk dilantik dan mengangkat sumpah/janji jabatan sebagai <b id="jabPejabat"></b>, yang akan dilaksanakan pada:
-</p>
---->
 <p><b>Hari / Tanggal</b></p>
 <p>Selasa, 17 Maret 2026</p>
 
@@ -256,7 +224,7 @@ Demikian undangan ini disampaikan.
 Atas kehadiran Bapak/Ibu diucapkan terima kasih.
 </p>
 
-<div class="dokumen-section">
+<div>
 
 <a href="https://maps.app.goo.gl/odj2snPyDhbd431d9" target="_blank" class="button">📍 Maps</a>
 
@@ -269,92 +237,86 @@ Atas kehadiran Bapak/Ibu diucapkan terima kasih.
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
+/* PARAMETER URL */
 
-const pejabat = params.get("pejabat");
-const jabatan = params.get("jabatan");
-const jenis   = params.get("jenis");
+const params=new URLSearchParams(window.location.search);
+
+const pejabat=params.get("pejabat");
+const jabatan=params.get("jabatan");
+const jenis=params.get("jenis")||"peserta";
 
 if(!pejabat){
+
 document.body.style.display="block";
 document.body.innerHTML="<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
-}
-else{
+
+}else{
 
 document.getElementById("namaPejabat").textContent=pejabat;
 
-if(jabatan){
-document.getElementById("jabPejabat").textContent=jabatan;
-}
+const isi=document.getElementById("isiUndangan");
 
+if(jenis==="tamu"){
 
-const isiUndangan = document.getElementById("isiUndangan");
-
-if(jenis === "tamu"){
-
-isiUndangan.innerHTML = `
-Sehubungan dengan pelaksanaan Pelantikan Pejabat Pimpinan Tinggi, Pejabat Administrator dan Pejabat Pengawas,
-dengan hormat kami mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada kegiatan tersebut yang akan
-dilaksanakan pada:
+isi.innerHTML=`
+Sehubungan dengan pelaksanaan Pelantikan Pejabat Pimpinan Tinggi,
+Pejabat Administrator dan Pejabat Pengawas, dengan hormat kami
+mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada
+kegiatan tersebut yang akan dilaksanakan pada:
 `;
 
-document.getElementById("jabPejabat").style.display="none";
+}else{
 
-}
+isi.innerHTML=`
+Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017
+tentang Manajemen Pegawai Negeri Sipil, setiap Pegawai Negeri
+Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat
+sumpah/janji jabatan menurut agama atau kepercayaannya kepada
+Tuhan Yang Maha Esa.
 
-else{
-
-isiUndangan.innerHTML = `
-Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017 tentang Manajemen Pegawai Negeri Sipil, 
-setiap Pegawai Negeri Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat sumpah/janji jabatan menurut agama atau kepercayaannya kepada Tuhan Yang Maha Esa.
-Sehubungan dengan hal tersebut, dimohon kehadiran Saudara/Saudari untuk dilantik dan mengangkat sumpah/janji jabatan
-sebagai <b>${jabatan}</b>, yang akan dilaksanakan pada:
+Sehubungan dengan hal tersebut, dimohon kehadiran Saudara/Saudari
+untuk dilantik dan mengangkat sumpah/janji jabatan sebagai
+<b>${jabatan||"-"}</b>, yang akan dilaksanakan pada:
 `;
 
 }
-  
+
 document.body.style.display="block";
+
 }
 
-/* AMBIL LINK UNDANGAN DARI GOOGLE SHEETS */
+/* AMBIL LINK DARI GOOGLE SHEETS */
 
 async function ambilDataUndangan(){
 
 try{
 
-const urlSheet="https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
+const sheetURL="https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
 
-const response=await fetch(urlSheet);
-const data=await response.json();
+const res=await fetch(sheetURL);
+const data=await res.json();
 
-const namaURL = decodeURIComponent(pejabat).toLowerCase().trim();
+const nama=(pejabat||"").toLowerCase().trim();
 
-let linkDrive=null;
+const hasil=data.find(r=>(r.pejabat||"").toLowerCase().trim()===nama);
 
-data.forEach(row=>{
+const btn=document.querySelector(".drive-btn");
 
-const namaSheet=row.pejabat.toLowerCase().trim();
+if(hasil && hasil.link){
 
-if(namaSheet===namaURL){
-linkDrive=row.link;
-}
-
-});
-
-if(linkDrive){
-
-document.querySelector(".drive-btn").href=linkDrive;
+btn.href=hasil.link;
 
 }else{
 
-document.querySelector(".drive-btn").innerText="Dokumen tidak tersedia";
-document.querySelector(".drive-btn").style.background="#777";
+btn.innerText="Dokumen tidak tersedia";
+btn.style.background="#777";
+btn.removeAttribute("href");
 
 }
 
-}catch(e){
+}catch(err){
 
-console.log(e);
+console.log("Gagal mengambil data",err);
 
 }
 
@@ -370,7 +332,7 @@ const cover=document.getElementById("cover");
 const isi=document.getElementById("isi");
 const musik=document.getElementById("musik");
 
-musik.volume=0.5;
+musik.volume=.5;
 musik.play();
 
 cover.style.opacity="0";
@@ -381,36 +343,25 @@ cover.style.display="none";
 isi.style.display="block";
 isi.style.opacity="0";
 
-setTimeout(()=>{
-isi.style.opacity="1";
-},50);
+setTimeout(()=>{isi.style.opacity="1"},50);
 
 },500);
 
 }
 
-/* HENTIKAN MUSIK SAAT TUTUP */
+/* HENTIKAN MUSIK */
 
-window.addEventListener("beforeunload",function(){
+window.addEventListener("beforeunload",()=>{
 
 const musik=document.getElementById("musik");
-
-if(musik){
-musik.pause();
-musik.currentTime=0;
-}
+if(musik){musik.pause();musik.currentTime=0}
 
 });
 
-/* HENTIKAN MUSIK SAAT PINDAH TAB */
-
-document.addEventListener("visibilitychange",function(){
+document.addEventListener("visibilitychange",()=>{
 
 const musik=document.getElementById("musik");
-
-if(document.hidden && musik){
-musik.pause();
-}
+if(document.hidden && musik){musik.pause()}
 
 });
 
