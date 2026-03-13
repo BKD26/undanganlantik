@@ -48,10 +48,16 @@ left:0;
 width:100%;
 height:65%;
 background-image:url('BUP.png'),url('WABUP.png');
-background-repeat:no-repeat;
+background-repeat:no-repeat,no-repeat;
 background-position:20% bottom,80% bottom;
 background-size:300px,300px;
 opacity:.65;
+z-index:0;
+}
+
+.cover>*{
+position:relative;
+z-index:1;
 }
 
 .logo{
@@ -174,12 +180,11 @@ Atas kehadiran Bapak/Ibu diucapkan terima kasih.
 <a href="#" target="_blank" class="drive-btn">📄 Undangan Resmi TTD BUP</a>
 
 </div>
-
 </div>
 
 <script>
 
-/* ambil parameter nama */
+/* ambil parameter */
 
 const params = new URLSearchParams(window.location.search);
 const pejabat = params.get("pejabat");
@@ -191,42 +196,50 @@ if(!pejabat){
 document.body.innerHTML =
 "<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
 
+throw new Error("Parameter pejabat tidak ada");
+
 }
 
-/* ambil data dari google sheets */
+/* ambil data dari sheets */
 
 async function ambilData(){
 
 try{
 
-const url =
-"https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
+const url="https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
 
-const res = await fetch(url);
-const data = await res.json();
+const res=await fetch(url);
+const data=await res.json();
 
-const namaCari = decodeURIComponent(pejabat).toLowerCase().trim();
+const namaCari=pejabat.toLowerCase().replace(/\s+/g," ").trim();
 
-const hasil = data.find(row =>
-(row.pejabat || "").toLowerCase().trim() === namaCari
+const hasil=data.find(row =>
+(row.pejabat || "")
+.toLowerCase()
+.replace(/\s+/g," ")
+.trim()===namaCari
 );
 
 if(!hasil){
-console.log("Nama tidak ditemukan di Sheets");
+
+document.getElementById("isiUndangan").innerHTML=
+"Data undangan tidak ditemukan.";
+
 return;
+
 }
 
 /* tampilkan nama */
 
-document.getElementById("namaPejabat").textContent = hasil.pejabat;
+document.getElementById("namaPejabat").textContent=hasil.pejabat;
 
 /* isi undangan */
 
-const isi = document.getElementById("isiUndangan");
+const isi=document.getElementById("isiUndangan");
 
-if(hasil.jenis === "tamu"){
+if(hasil.jenis==="tamu"){
 
-isi.innerHTML = `
+isi.innerHTML=`
 Sehubungan dengan pelaksanaan Pelantikan Pejabat Pimpinan Tinggi,
 Pejabat Administrator dan Pejabat Pengawas, dengan hormat kami
 mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada
@@ -235,7 +248,7 @@ kegiatan tersebut yang akan dilaksanakan pada:
 
 }else{
 
-isi.innerHTML = `
+isi.innerHTML=`
 Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017
 tentang Manajemen Pegawai Negeri Sipil, setiap Pegawai Negeri
 Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat
@@ -249,20 +262,17 @@ untuk dilantik dan mengangkat sumpah/janji jabatan sebagai
 
 }
 
-/* link drive */
+/* tombol drive */
 
-const btn = document.querySelector(".drive-btn");
+const btn=document.querySelector(".drive-btn");
 
 if(hasil.link){
 
-btn.href = hasil.link;
-btn.target="_blank";
+btn.href=hasil.link;
 
 }else{
 
-btn.innerText="Dokumen tidak tersedia";
-btn.style.background="#777";
-btn.removeAttribute("href");
+btn.style.display="none";
 
 }
 
@@ -276,9 +286,6 @@ console.log("Gagal mengambil data",e);
 
 ambilData();
 
-
-
-  
 /* buka undangan */
 
 function bukaUndangan(){
