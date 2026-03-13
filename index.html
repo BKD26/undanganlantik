@@ -188,7 +188,8 @@ document.body.style.display="block";
 
 if(!pejabat){
 
-document.body.innerHTML="<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
+document.body.innerHTML =
+"<h2 style='color:white;margin-top:40vh'>Undangan Tidak Valid</h2>";
 
 }
 
@@ -198,43 +199,76 @@ async function ambilData(){
 
 try{
 
-const url="https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
+const url =
+"https://opensheet.elk.sh/1F75zD-kDaSoYB-q0RLnrRGQ3GQvoTFYTijv8WpKVP2k/Sheet1";
 
-const res=await fetch(url);
-const data=await res.json();
+const res = await fetch(url);
+const data = await res.json();
 
-const namaCari=decodeURIComponent(pejabat).toLowerCase().trim();
+const namaCari = decodeURIComponent(pejabat).toLowerCase().trim();
 
-const hasil=data.find(row=>
-(row.pejabat||"").toLowerCase().trim()===namaCari
+const hasil = data.find(row =>
+(row.pejabat || "").toLowerCase().trim() === namaCari
 );
 
-if(!hasil) return;
+if(!hasil){
+console.log("Nama tidak ditemukan di Sheets");
+return;
+}
 
-document.getElementById("namaPejabat").textContent=hasil.pejabat;
+/* tampilkan nama */
 
-const isi=document.getElementById("isiUndangan");
+document.getElementById("namaPejabat").textContent = hasil.pejabat;
 
-if(hasil.jenis==="tamu"){
+/* isi undangan */
 
-isi.innerHTML="Dengan hormat kami mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada kegiatan pelantikan yang akan dilaksanakan pada:";
+const isi = document.getElementById("isiUndangan");
+
+if(hasil.jenis === "tamu"){
+
+isi.innerHTML = `
+Sehubungan dengan pelaksanaan Pelantikan Pejabat Pimpinan Tinggi,
+Pejabat Administrator dan Pejabat Pengawas, dengan hormat kami
+mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada
+kegiatan tersebut yang akan dilaksanakan pada:
+`;
 
 }else{
 
-isi.innerHTML=`Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017 tentang Manajemen Pegawai Negeri Sipil, dimohon kehadiran Saudara/Saudari untuk dilantik dan mengangkat sumpah jabatan sebagai <b>${hasil.jabatan}</b> yang akan dilaksanakan pada:`;
+isi.innerHTML = `
+Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017
+tentang Manajemen Pegawai Negeri Sipil, setiap Pegawai Negeri
+Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat
+sumpah/janji jabatan menurut agama atau kepercayaannya kepada
+Tuhan Yang Maha Esa.
+
+Sehubungan dengan hal tersebut, dimohon kehadiran Saudara/Saudari
+untuk dilantik dan mengangkat sumpah/janji jabatan sebagai
+<b>${hasil.jabatan}</b>, yang akan dilaksanakan pada:
+`;
 
 }
 
-const btn=document.querySelector(".drive-btn");
+/* link drive */
+
+const btn = document.querySelector(".drive-btn");
 
 if(hasil.link){
-btn.href=hasil.link;
+
+btn.href = hasil.link;
 btn.target="_blank";
+
+}else{
+
+btn.innerText="Dokumen tidak tersedia";
+btn.style.background="#777";
+btn.removeAttribute("href");
+
 }
 
 }catch(e){
 
-console.log("gagal mengambil data",e);
+console.log("Gagal mengambil data",e);
 
 }
 
@@ -242,6 +276,9 @@ console.log("gagal mengambil data",e);
 
 ambilData();
 
+
+
+  
 /* buka undangan */
 
 function bukaUndangan(){
