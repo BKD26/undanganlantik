@@ -277,7 +277,7 @@ data.forEach(row=>{
 
 const namaSheet=(row.pejabat || "").toLowerCase().trim();
 
-if(namaSheet===namaURL){
+if(namaSheet.trim() === namaURL.trim()){
 linkDrive=row.link;
 }
 
