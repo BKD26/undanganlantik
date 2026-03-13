@@ -232,6 +232,8 @@ max-width:90%;
 
 <div class="card">
 
+<p class="justify" id="isiUndangan"></p>
+<!---  
 <p class="justify">
 Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017 tentang Manajemen Pegawai Negeri Sipil, setiap Pegawai Negeri Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat sumpah/janji jabatan menurut agama atau kepercayaannya kepada Tuhan Yang Maha Esa.
 </p>
@@ -239,7 +241,7 @@ Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017 tentang Manajemen
 <p class="justify">
 Sehubungan dengan hal tersebut, dimohon kehadiran Saudara untuk dilantik dan mengangkat sumpah/janji jabatan sebagai <b id="jabPejabat"></b>, yang akan dilaksanakan pada:
 </p>
-
+--->
 <p><b>Hari / Tanggal</b></p>
 <p>Selasa, 17 Maret 2026</p>
 
@@ -271,6 +273,7 @@ const params = new URLSearchParams(window.location.search);
 
 const pejabat = params.get("pejabat");
 const jabatan = params.get("jabatan");
+const jenis   = params.get("jenis");
 
 if(!pejabat){
 document.body.style.display="block";
@@ -284,6 +287,32 @@ if(jabatan){
 document.getElementById("jabPejabat").textContent=jabatan;
 }
 
+
+const isiUndangan = document.getElementById("isiUndangan");
+
+if(jenis === "tamu"){
+
+isiUndangan.innerHTML = `
+Sehubungan dengan pelaksanaan Pelantikan Pejabat Pimpinan Tinggi, Pejabat Administrator dan Pejabat Pengawas,
+dengan hormat kami mengundang Bapak/Ibu untuk hadir sebagai tamu undangan pada kegiatan tersebut yang akan
+dilaksanakan pada:
+`;
+
+document.getElementById("jabPejabat").style.display="none";
+
+}
+
+else{
+
+isiUndangan.innerHTML = `
+Berdasarkan ketentuan Peraturan Pemerintah Nomor 11 Tahun 2017 tentang Manajemen Pegawai Negeri Sipil, 
+setiap Pegawai Negeri Sipil yang diangkat dalam jabatan harus dilantik dan mengangkat sumpah/janji jabatan menurut agama atau kepercayaannya kepada Tuhan Yang Maha Esa.
+Sehubungan dengan hal tersebut, dimohon kehadiran Saudara/Saudari untuk dilantik dan mengangkat sumpah/janji jabatan
+sebagai <b>${jabatan}</b>, yang akan dilaksanakan pada:
+`;
+
+}
+  
 document.body.style.display="block";
 }
 
