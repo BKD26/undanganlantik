@@ -99,6 +99,71 @@ left:120%;
 
 
 
+  
+/* OPENING ANIMATION */
+
+.opening{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(135deg,#0b3d91,#021c44);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:9999;
+text-align:center;
+animation:openingFade 1s 7s forwards;
+}
+
+.opening-logo{
+width:130px;
+opacity:0;
+animation:logoMuncul 1.5s forwards;
+}
+
+.opening-title{
+margin-top:20px;
+font-size:28px;
+letter-spacing:2px;
+opacity:0;
+animation:titleMuncul 1.2s 1.2s forwards;
+}
+
+.opening-line{
+width:200;
+height:3px;
+background:#ffd700;
+margin-top:20px;
+animation:lineGrow 1.2s 2.5s forwards;
+}
+
+@keyframes logoMuncul{
+from{opacity:0; transform:scale(0.5);}
+to{opacity:1; transform:scale(1);}
+}
+
+@keyframes titleMuncul{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes lineGrow{
+from{width:0;}
+to{width:720px;}
+}
+
+@keyframes openingFade{
+to{
+opacity:0;
+visibility:hidden;
+}
+}
+
+
+
 
 
   
@@ -232,6 +297,26 @@ max-width:90%;
 </style>
 </head>
 
+
+<!-- OPENING ANIMATION -->
+
+<div class="opening">
+
+<img src="logo.png" class="opening-logo">
+
+<div class="opening-title">
+PELANTIKAN PEJABAT
+PIMPINAN TINGGI PRATAMA, ADMINISTRATOR, PENGAWAS
+PEMERINTAH KAB. BOVEN DIGOEL
+</div>
+
+<div class="opening-line"></div>
+
+</div>
+
+
+
+  
 <body style="display:none;">
 
 <!-- AUDIO -->
