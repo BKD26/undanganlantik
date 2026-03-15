@@ -278,7 +278,7 @@ data.forEach(row=>{
 
 const namaSheet=(row.pejabat || "").toLowerCase().trim();
 
-if(namaSheet.trim() === namaURL.trim()){
+if(namaSheet.replace(/\s+/g,' ') === namaURL.replace(/\s+/g,' ')){
 linkDrive=row.link;
 }
 
