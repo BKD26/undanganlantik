@@ -50,7 +50,7 @@ position:absolute;
 top:50%;
 left:50%;
 width:600px;      /* ukuran besar */
-opacity:0.08;     /* transparan agar teks tetap jelas */
+opacity:0.1;     /* transparan agar teks tetap jelas */
 transform:translate(-50%,-50%);
 pointer-events:none;
 z-index:0;
@@ -246,20 +246,25 @@ background:#ffd700;
 
 .isi{
 display:none;
-background:white;
+background:rgba(255,255,255,0.9);
 color:black;
 padding:30px;
 min-height:100vh;
+position:relative;
+overflow:hidden;
 animation:fadeIn 1.5s;
 }
 
 .card{
-background:#f4f4f4;
+background:rgba(255,255,255,0.4);
+border:0.5px solid rgba(0,0,0,0.08);
 padding:25px;
 margin:20px auto;
 border-radius:15px;
 max-width:420px;
-box-shadow:0 5px 20px rgba(0,0,0,0.15);
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+position:relative;
+z-index:2;
 }
 
 /* TOMBOL */
