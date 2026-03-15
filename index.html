@@ -36,6 +36,28 @@ overflow-x:hidden;
 }
 
 
+/* BACKGROUND LOGO BESAR TETAP */
+
+.isi{
+position:relative;
+overflow:hidden;
+}
+
+/* LOGO WATERMARK */
+
+.logo-bg{
+position:absolute;
+top:50%;
+left:50%;
+width:600px;      /* ukuran besar */
+opacity:0.08;     /* transparan agar teks tetap jelas */
+transform:translate(-50%,-50%);
+pointer-events:none;
+z-index:0;
+}
+
+
+  
 /* LOGO DENGAN CAHAYA EMAS */
 
 .logo{
@@ -161,9 +183,6 @@ opacity:0;
 visibility:hidden;
 }
 }
-
-
-
 
 
   
