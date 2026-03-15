@@ -27,58 +27,69 @@
 
 <style>
 
-/* ===============================
-   BODY
-================================ */
-
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#0b3d91,#072c6c,#021c44);
+background:linear-gradient(135deg,#0b3d91,#021c44);
 color:white;
 text-align:center;
 overflow-x:hidden;
 }
 
 
-/* ===============================
-   LOGO WATERMARK BACKGROUND
-================================ */
+/* BACKGROUND LOGO BESAR TETAP */
+
+.isi{
+position:relative;
+overflow:hidden;
+}
+
+/* LOGO WATERMARK */
 
 .logo-bg{
 position:absolute;
 top:50%;
 left:50%;
-width:600px;
-opacity:0.12;
+width:600px;      /* ukuran besar */
+opacity:0.1;     /* transparan agar teks tetap jelas */
 transform:translate(-50%,-50%);
 pointer-events:none;
 z-index:0;
-filter:contrast(110%);
 }
 
 
-/* ===============================
-   LOGO UTAMA
-================================ */
+  
+/* LOGO DENGAN CAHAYA EMAS */
 
 .logo{
 width:180px;
 margin-bottom:20px;
-display:block;
 position:relative;
-z-index:2;
+z-index:1;
 }
 
 
-/* ===============================
-   LOGO KILAU EMAS
-================================ */
+/* WRAPPER LOGO */
 
 .logo-wrapper{
 position:relative;
 display:inline-block;
 overflow:hidden;
+}
+
+/* LOGO */
+
+.logo{
+width:180px;
+display:block;
+}
+
+
+/* EFEK KILAU EMAS */
+
+.logo-wrapper{
+position:relative;
+display:inline-block;
 }
 
 .logo-wrapper::after{
@@ -94,19 +105,25 @@ transparent,
 rgba(255,215,0,0.8),
 transparent
 );
-transform:skewX(-25deg);
+transform:skewX(-75deg);
 animation:kilauEmas 6s infinite;
 }
 
+/* ANIMASI KILAU */
+
 @keyframes kilauEmas{
-0%{left:-60%;}
-100%{left:120%;}
+0%{
+left:-60%;
+}
+100%{
+left:120%;
+}
 }
 
 
-/* ===============================
-   OPENING ANIMATION
-================================ */
+
+  
+/* OPENING ANIMATION */
 
 .opening{
 position:fixed;
@@ -114,13 +131,13 @@ top:0;
 left:0;
 width:100%;
 height:100vh;
-background:linear-gradient(135deg,#0b3d91,#072c6c,#021c44);
+background:linear-gradient(135deg,#0b3d91,#021c44);
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-text-align:center;
 z-index:9999;
+text-align:center;
 animation:openingFade 1s 7s forwards;
 }
 
@@ -139,15 +156,12 @@ animation:titleMuncul 1.2s 1.2s forwards;
 }
 
 .opening-line{
-width:200px;
+width:200;
 height:3px;
 background:#ffd700;
 margin-top:20px;
 animation:lineGrow 1.2s 2.5s forwards;
 }
-
-
-/* OPENING KEYFRAMES */
 
 @keyframes logoMuncul{
 from{opacity:0; transform:scale(0.5);}
@@ -161,7 +175,7 @@ to{opacity:1; transform:translateY(0);}
 
 @keyframes lineGrow{
 from{width:0;}
-to{width:60%;}
+to{width:720px;}
 }
 
 @keyframes openingFade{
@@ -172,9 +186,8 @@ visibility:hidden;
 }
 
 
-/* ===============================
-   COVER
-================================ */
+  
+/* COVER */
 
 .cover{
 height:100vh;
@@ -199,20 +212,20 @@ background-image:url('BUP.png'), url('WABUP.png');
 background-repeat:no-repeat,no-repeat;
 background-position:20% bottom, 80% bottom;
 background-size:300px,300px;
-opacity:0.7;
+opacity:0.68;
 pointer-events:none;
 z-index:0;
 }
 
 .cover > *{
 position:relative;
-z-index:2;
+z-index:1;
 }
 
-
-/* ===============================
-   BUTTON
-================================ */
+.logo{
+width:180px;
+margin-bottom:20px;
+}
 
 button{
 padding:15px 35px;
@@ -228,13 +241,9 @@ font-weight:bold;
 
 button:hover{
 background:#ffd700;
-color:black;
 }
 
-
-/* ===============================
-   ISI UNDANGAN
-================================ */
+/* ISI */
 
 .isi{
 display:none;
@@ -247,15 +256,9 @@ overflow:hidden;
 animation:fadeIn 1.5s;
 }
 
-
-/* ===============================
-   CARD
-================================ */
-
 .card{
-background:rgba(255,255,255,0.45);
-backdrop-filter:blur(6px);
-border:1px solid rgba(0,0,0,0.08);
+background:rgba(255,255,255,0.4);
+border:0.5px solid rgba(0,0,0,0.08);
 padding:25px;
 margin:20px auto;
 border-radius:15px;
@@ -265,10 +268,7 @@ position:relative;
 z-index:2;
 }
 
-
-/* ===============================
-   TOMBOL LINK
-================================ */
+/* TOMBOL */
 
 .button,
 .drive-btn{
@@ -291,30 +291,15 @@ background:#ffd700;
 color:black;
 }
 
-
-/* ===============================
-   TEXT
-================================ */
-
 .justify{
 text-align:justify;
 text-indent:30px;
 }
 
-
-/* ===============================
-   FADE ANIMATION
-================================ */
-
 @keyframes fadeIn{
 from{opacity:0; transform:translateY(20px);}
 to{opacity:1; transform:translateY(0);}
 }
-
-
-/* ===============================
-   RESPONSIVE
-================================ */
 
 @media(max-width:768px){
 
@@ -328,10 +313,6 @@ height:55%;
 width:140px;
 }
 
-.logo-bg{
-width:320px;
-}
-
 .card{
 max-width:90%;
 }
@@ -339,7 +320,6 @@ max-width:90%;
 }
 
 </style>
-
 </head>
 
 
