@@ -35,6 +35,73 @@ text-align:center;
 overflow-x:hidden;
 }
 
+
+/* LOGO DENGAN CAHAYA EMAS */
+
+.logo{
+width:180px;
+margin-bottom:20px;
+position:relative;
+z-index:1;
+}
+
+
+/* WRAPPER LOGO */
+
+.logo-wrapper{
+position:relative;
+display:inline-block;
+overflow:hidden;
+}
+
+/* LOGO */
+
+.logo{
+width:180px;
+display:block;
+}
+
+
+/* EFEK KILAU EMAS */
+
+.logo-wrapper{
+position:relative;
+display:inline-block;
+}
+
+.logo-wrapper::after{
+content:"";
+position:absolute;
+top:-20%;
+left:-60%;
+width:50%;
+height:140%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,215,0,0.8),
+transparent
+);
+transform:skewX(-75deg);
+animation:kilauEmas 6s infinite;
+}
+
+/* ANIMASI KILAU */
+
+@keyframes kilauEmas{
+0%{
+left:-60%;
+}
+100%{
+left:120%;
+}
+}
+
+
+
+
+
+  
 /* COVER */
 
 .cover{
